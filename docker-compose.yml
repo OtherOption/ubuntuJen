@@ -1,40 +1,30 @@
-version: '2'
+#Add a version reference
+version: '3'
 
-services:
-
-  jenkins:
-    image: jenkins/jenkins:lts
-    volumes:
-      - './jenkins_home:/var/jenkins_home'
+#Add Services
+services: 
+  master:
+    build: ./jenkins-master
     ports:
-      - "8080"
+      - "50000:50000"
+    volumes: 
+      - jenkins-log:/var/log/jenkins
+      - jenkins-data:/var/jenkins_home
+    networks: 
+      - jenkins-net
 
   nginx:
-    image: nginx
-    links:
-      - jenkins
-    volumes:
-      - "./etc/nginx/conf.d/:/etc/nginx/conf.d/"
-    environment:
-      VIRTUAL_HOST: uiwebsites.com
-      LETSENCRYPT_HOST: uiwebsites.com
-      LETSENCRYPT_EMAIL: tcarroll500@egmail.com
-
-  nginx-proxy:
-    image: jwilder/nginx-proxy
+    build: ./jenkins-nginx
     ports:
       - "80:80"
-      - "443:443"
-    volumes:
-      - "./nginx/vhost.d:/etc/nginx/vhost.d"
-      - "./nginx/html:/usr/share/nginx/html"
-      - "./nginx/certs:/etc/nginx/certs"
-      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+    networks: 
+      - jenkins-net
+      
+#Add Volumes
+volumes :
+  jenkins-data:
+  kenkins-log:
 
-  letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    volumes_from:
-      - "nginx-proxy"
-
+#Add network drives
+networks: 
+jenkins-net:
