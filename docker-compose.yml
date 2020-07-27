@@ -16,7 +16,7 @@ services:
     networks:
       - jenkins-net
 volumes:
-jenkins-log: 
-jenkins-data:
+  jenkins-log: 
+  jenkins-data:
 networks:
   jenkins-net:
