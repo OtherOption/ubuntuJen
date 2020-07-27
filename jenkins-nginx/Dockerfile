@@ -7,8 +7,8 @@ RUN yum -y install nginx-1.10.1
 
 RUN rm /etc/nginx/conf.d/default.conf
 
-ADD confs/jenkins.conf /etc/nginx/conf.d/jenkins.conf
-ADD confs/nginx.conf /etc/nginx/nginx.conf
+ADD ./confs/jenkins.conf /etc/nginx/conf.d/jenkins.conf
+ADD ./confs/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
