@@ -6,7 +6,7 @@ RUN yum -y install http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-
 RUN yum -y install nginx-1.10.1
 
 RUN rm /etc/nginx/conf.d/default.conf
-RUN mkdir /etc/ssl/
+RUN mkdir -p /etc/ssl/
 
 COPY jenkins.conf /etc/nginx/conf.d/jenkins.conf
 COPY nginx.conf /etc/nginx/nginx.conf
